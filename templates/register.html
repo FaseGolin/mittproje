@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends 'html.html' %}
+
+    {% block title %}
+    Register
+    {% endblock %}
+
+    {% block content %}
+    <div class="form-container">
+        <form action="{{ url_for('register') }}" method="post">
+            <h1>Register</h1>
+            <label for="username">Username:</label>
+            <input type="text" name="username" required>
+    
+            <label for="password">Password:</label>
+            <input type="password" name="password" required>
+
+            <input type="hidden" id="selectedCourses" name="selectedCourses">
+    
+            <input type="submit" name="submitLogin" value="Register">
+            <p>
+                Already have an account? <br>
+                <button type="button" onclick="window.location.href='{{ url_for('login') }}'">Log in</button>
+            </p>  
+        </form>
+    </div>
+
+    
+    <p class="price">All Course Prices Is: <br> <span style="color:gold">10$</span><p>
+
+
+    <div class="widgets-container">
+        <div class="widgets2" data-course="copywriting">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/copywriting-icon.webp" alt="Copywriting">
+            <p>Copywriting</p>
+        </div>
+        <div class="widgets2" data-course="client-acquisition">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/client-acquisition-icon.webp" alt="Client Acquisition">
+            <p>Client Acquisition</p>
+        </div>
+        <div class="widgets2" data-course="ecommerce">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/ecommerce-icon.webp" alt="Ecommerce">
+            <p>Ecommerce</p>
+        </div>
+        <div class="widgets2" data-course="business">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/business-icon.webp" alt="Business">
+            <p>Business</p>
+        </div>
+        <div class="widgets2" data-course="content-creation">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/content-creation-icon.webp" alt="Content Creation">
+            <p>Content Creation</p>
+        </div>
+        <div class="widgets2" data-course="crypto">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/crypto-icon.webp" alt="Crypto">
+            <p>Crypto</p>
+        </div>
+        <div class="widgets2" data-course="health">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/health-icon.webp" alt="Health">
+            <p>Health & Fitness</p>
+        </div>
+        <div class="widgets2" data-course="market">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/market-icon.webp" alt="Market">
+            <p>Market Strategies</p>
+        </div>
+        <div class="widgets2" data-course="artificial-intelligence">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/artificial-intelligence-icon.webp" alt="AI">
+            <p>Artificial Intelligence</p>
+        </div>
+        <div class="widgets2" data-course="mindset">
+            <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/mindset-icon.webp" alt="Mindset">
+            <p>Mindset</p>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="selectedCourses" name="selectedCourses">
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const widgets = document.querySelectorAll(".widgets2");
+    const selectedCoursesInput = document.getElementById("selectedCourses");
+
+    widgets.forEach(widget => {
+        widget.addEventListener("click", function () {
+            this.classList.toggle("selected");
+        });
+    });
+
+    document.querySelector("form").addEventListener("submit", function (event) {
+        const selectedCourses = Array.from(document.querySelectorAll(".widgets2.selected"))
+                                   .map(widget => widget.getAttribute("data-course"));
+
+        console.log("Selected Courses Before Submit:", selectedCourses); // Debugging output
+
+        if (selectedCourses.length === 0) {
+            alert("Please select at least one course.");
+            event.preventDefault(); // Prevent submission if no courses are selected
+            return;
+        }
+
+        selectedCoursesInput.value = selectedCourses.join(",");
+        console.log("Hidden Input Value Set:", selectedCoursesInput.value); // Debugging output
+    });
+});
+</script>
+
+
+
+    
+    {% endblock %}
+</body>
+</html>

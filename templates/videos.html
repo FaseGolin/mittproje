@@ -1,0 +1,66 @@
+{% extends 'html.html' %}
+
+{% block title %}
+{{ course }} Videos
+{% endblock %}
+
+{% block content %}
+    <script>
+        let videos = JSON.parse('{{ videos | tojson | safe }}');
+        let currentIndex = 0;
+
+        function updateVideo() {
+            let videoElement = document.getElementById("video-player");
+            let titleElement = document.getElementById("video-title");
+            let descriptionElement = document.getElementById("video-description");
+
+            let videoData = videos[currentIndex];
+            videoElement.src = `https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/videos/${videoData.filename}`;
+            titleElement.textContent = videoData.title;
+            descriptionElement.textContent = videoData.description;
+
+            document.getElementById("prev-btn").disabled = currentIndex === 0;
+            document.getElementById("next-btn").disabled = currentIndex === videos.length - 1;
+        }
+
+        function nextVideo() {
+            if (currentIndex < videos.length - 1) {
+                currentIndex++;
+                updateVideo();
+            }
+        }
+
+        function prevVideo() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateVideo();
+            }
+        }
+
+        window.onload = updateVideo;
+    </script>
+</head>
+<body>
+    <div id="lådatre"> 
+        <h1 id="video-title"></h1>
+        <div class="video">
+            <video id="video-player" width="680" controls autoplay>
+                <source src="" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p id="video-description"></p>
+        <br>
+        <div class="navigation">
+            <button id="prev-btn" onclick="prevVideo()">Previous</button>
+            <button id="next-btn" onclick="nextVideo()">Next</button>
+        </div>
+        <br>
+        <div class="back">
+            <a href="courses">Back to Courses</a>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

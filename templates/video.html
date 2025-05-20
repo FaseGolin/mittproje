@@ -1,0 +1,38 @@
+
+{% extends 'html.html' %}
+
+{% block title %}
+Video
+{% endblock %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ video.title }}</title>
+</head>
+<body>
+    <div id="lådatvå"> 
+        <h1>{{ video.title }}</h1>
+        <div class="video1">
+            <video width="800" controls autoplay>
+                <source src="{{ video_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <p>{{ video.description }}</p>
+        <br>
+        <div class="back">
+            <a href="/">Back to Home</a>
+        </div>
+    </div>
+</body>
+</html>
+
+</body>
+</html>
+
+{% endblock %}

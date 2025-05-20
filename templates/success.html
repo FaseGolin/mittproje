@@ -1,0 +1,22 @@
+{% extends 'html.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Registration Successful</h1>
+    <h2>Your Selected Courses</h2>
+
+    <div class="course-grid">
+        {% for course in selected_courses %}
+            <div class="widget3" onclick="window.location.href='/course-videos?course={{ course }}'">
+                <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/{{ course }}-icon.webp" 
+                     alt="{{ course }}" class="course-icon">
+                <p>{{ course.replace("-", " ")|title }}</p>
+            </div>      
+        {% endfor %}
+    </div>
+</div>
+
+
+</style>
+
+{% endblock %}

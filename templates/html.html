@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRW</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Biryani:wght@200;300;400;600;700;800;900&family=Share+Tech&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='schtil.css') }}">
+    <title>{% block title %}
+        default
+        {% endblock %}
+    </title>
+</head>
+<body>
+    <header>
+        <header>
+            <div class="header-inner">
+
+                <div class="header-left">
+                    <div class="icon">
+                        <img src="https://huizjjyrhmxufwgkfwiu.supabase.co/storage/v1/object/public/sida/images/chess.png" alt="Icon" style="width: 50px;">
+                    </div>
+                    <p class="site-title">The Real World Portal</p>
+        
+                    {% if 'username' in session %}
+                    <div class="header-center">
+                        <button onclick="window.location.href='{{ url_for('success') }}'">Members</button>
+                        <button onclick="window.location.href='{{ url_for('logout') }}'" class="logout-button">Hi, {{ session['username'] }} logout?</button>
+                    </div>
+                {% else %}
+                    <div class="auth-buttons">
+                        <button onclick="window.location.href='{{ url_for('register') }}'">Join now!</button>
+                        <button onclick="window.location.href='{{ url_for('login') }}'">Log in!</button>
+                    </div>
+                {% endif %}
+           
+                </div>
+        
+               
+        
+               
+        
+                <nav id="links" class="header-right">
+                    <a href="{{ url_for('home') }}#HOME">HOME</a>
+                    <a href="{{ url_for('home') }}#ABOUT">ABOUT</a>
+                    <a href="{{ url_for('home') }}#BLOG">ACCESS</a>
+                    <a href="{{ url_for('home') }}#JOIN">SKILLS</a>
+                </nav>
+            </div>
+
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+                <div class="flash-message 
+                    {% if category == 'success' %}success
+                    {% elif category == 'danger' %}danger
+                    {% elif category == 'warning' %}warning
+                    {% else %}default{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endwith %}
+
+{% for user in users %}
+<a class="busch" href="{{ url_for('user_profile', user_id=user['id']) }}">
+    <div class="user-card">
+        <p>Username: {{ user['username'] }}</p>
+        <p>Courses: {{ user['courses'] }}</p> 
+    </div>
+</a>
+{% endfor %}
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(function() {
+            let messages = document.querySelectorAll(".flash-message");
+            messages.forEach(function(message) {
+                message.style.transition = "opacity 0.5s ease";
+                message.style.opacity = "0";
+                setTimeout(() => message.remove(), 500); 
+            });
+        }, 2500); 
+    });
+</script>
+            </div>
+        </header>
+    </header>
+
+
+    {% block content %}
+    {% endblock %}
+
+</body>
+</html>
