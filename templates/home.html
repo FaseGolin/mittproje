@@ -285,7 +285,7 @@
 </section>
 
 
-<script>
+<!-- <script>
     document.querySelectorAll('nav a').forEach((elem) => {
         elem.addEventListener('click', function(event) {
             const targetBlock = this.getAttribute('href').split('#')[1];
@@ -302,26 +302,40 @@
     });
 
 
-</script>
+</script> -->
 
 
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    const images = document.querySelectorAll('.tr5, .tr6, .tr7');
 
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.transform = 'scale(1.5)';
+
+<script>
+    document.querySelectorAll('nav a').forEach((elem) => {
+        elem.addEventListener('click', function(event) {
+            const targetBlock = this.getAttribute('href').split('#')[1];
+
+            if (window.location.pathname === "{{ url_for('home') }}") {
+                event.preventDefault();
+                const targetElement = document.getElementById(targetBlock);
+
+                if (targetElement) {
+                    // Dynamic offset based on screen width
+                    const isMobile = window.innerWidth <= 768;
+                    const offset = isMobile ? -150 : -70; // Smaller offset on mobile
+
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset + offset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             } else {
-                entry.target.style.transform = 'scale(1)';
+                sessionStorage.setItem('scrollTo', targetBlock);
             }
         });
-    }, { threshold: 0.10 }); 
-    images.forEach(image => observer.observe(image));
-});
+    });
+</script>
 
-</script> -->
 
 {% endblock %}
 </body>
